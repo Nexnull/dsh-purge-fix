@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="260" viewBox="0 0 960 260" role="img" aria-label="dsh-purge">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12172b"/>
+      <stop offset="55%" stop-color="#16213e"/>
+      <stop offset="100%" stop-color="#0f3460"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2f81f7"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="0%" r="85%">
+      <stop offset="0%" stop-color="#2f81f7" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#2f81f7" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="960" height="260" fill="url(#bg)"/>
+  <rect width="960" height="260" fill="url(#glow)"/>
+  <rect x="0" y="254" width="960" height="6" fill="url(#accent)"/>
+
+  <text x="480" y="112" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="56" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="1">dsh-purge</text>
+
+  <text x="480" y="156" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif" font-size="21" fill="#9fb3d8" text-anchor="middle">DeepSeek Harness 宿主补丁 · 红队作业台</text>
+
+  <text x="480" y="196" font-family="'SF Mono', Menlo, Consolas, monospace" font-size="15" fill="#64748b" text-anchor="middle">86 patches · 24 skills · prompt injection · policy guard</text>
+
+  <text x="480" y="228" font-family="'SF Mono', Menlo, Consolas, monospace" font-size="13" fill="#4a5b7a" text-anchor="middle">dsh 0.2.2-rc.1 / 0.2.1-rc.5 / 0.2.1-rc.2</text>
+</svg>

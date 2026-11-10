@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 校验版本并取出本次发行说明
+        run: |
+          set -euo pipefail
+          version="$(node -p "require('./package.json').version")"
+          if [ "v${version}" != "${GITHUB_REF_NAME}" ]; then
+            echo "tag ${GITHUB_REF_NAME} 与 package.json 版本 v${version} 不一致"
+            exit 1
+          fi
+          awk -v h="## ${version}" '
+            $0 == h { f = 1; next }
+            f && /^## / { exit }
+            f { print }
+          ' CHANGELOG.md > release-notes.md
+          if ! grep -q . release-notes.md; then
+            echo "CHANGELOG.md 里没有 ## ${version} 这一节，请先补上"
+            exit 1
+          fi
+          echo "--- 发行说明 ---"
+          cat release-notes.md
+
+      - name: 打包
+        run: |
+          set -euo pipefail
+          version="$(node -p "require('./package.json').version")"
+          name="dsh-purge-${version}"
+          git archive --format=tar.gz --prefix="${name}/" --output="${name}.tar.gz" HEAD
+          sha256sum "${name}.tar.gz" > "${name}.tar.gz.sha256"
+          ls -lh "${name}.tar.gz"
+
+      - name: 发布
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          version="$(node -p "require('./package.json').version")"
+          gh release create "${GITHUB_REF_NAME}" \
+            --title "${GITHUB_REF_NAME}" \
+            --notes-file release-notes.md \
+            "dsh-purge-${version}.tar.gz" \
+            "dsh-purge-${version}.tar.gz.sha256"

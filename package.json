@@ -1,0 +1,106 @@
+{
+  "name": "dsh-purge",
+  "version": "1.2.0",
+  "description": "DeepSeek Harness 本地宿主补丁与红队作业台插件",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": "./client.js",
+    "./redteam": "./lib/redteam/index.js",
+    "./redteam/store": "./lib/redteam/store.js",
+    "./redteam/ui": "./lib/redteam/ui.js",
+    "./redteam/tools": "./lib/redteam/tools.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "dsh-purge": "bin/dsh-purge.js"
+  },
+  "files": [
+    "skills",
+    "lib",
+    "!lib/default-prompt-inject.md",
+    "bin",
+    "docs",
+    "presets",
+    "install",
+    "scripts",
+    "client.js",
+    "cordis.patch.yml",
+    "INSTALL.md",
+    "CHANGELOG.md",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE",
+    "NOTICE",
+    "THIRD-PARTY-NOTICES.md"
+  ],
+  "scripts": {
+    "embed-prompt": "node scripts/embed-default-prompt.mjs",
+    "build:client": "node scripts/build-client.mjs",
+    "postinstall": "node install/register.mjs"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "dsh-plugins",
+    "网络安全",
+    "红队评测",
+    "llm-security",
+    "harness-security",
+    "deepseek-harness",
+    "red-team",
+    "instructions",
+    "rules",
+    "prompt-eval",
+    "agent"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nexnull/dsh-purge-fix.git"
+  },
+  "homepage": "https://github.com/Nexnull/dsh-purge-fix#readme",
+  "bugs": {
+    "url": "https://github.com/Nexnull/dsh-purge-fix/issues"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-connection",
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-slots",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    },
+    "install": {
+      "preferred": "tarball",
+      "tarball": "https://codeload.github.com/Nexnull/dsh-purge-fix/tar.gz/refs/heads/master",
+      "zip": "https://codeload.github.com/Nexnull/dsh-purge-fix/zip/refs/heads/master",
+      "git": "https://github.com/Nexnull/dsh-purge-fix.git"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dshTarget": "0.2.2-rc.1",
+  "dshTargets": [
+    "0.2.2-rc.1",
+    "0.2.1-rc.5",
+    "0.2.1-rc.2"
+  ]
+}

@@ -1,0 +1,20 @@
+dsh-purge
+Copyright 2026 YuJunZhiXue
+
+Source: https://github.com/YuJunZhiXue/dsh-purge
+
+This product is licensed under the Apache License, Version 2.0.
+Derivative works must retain this NOTICE and attribution.
+
+---
+
+Modifications for this branch
+Copyright 2026 Nexnull
+
+Repository: https://github.com/Nexnull/dsh-purge-fix
+Based on:   dsh-purge 1.1.71 (red-team engineering and skills)
+
+The modification list is in CHANGELOG.md. The original copyright notice and
+this NOTICE are retained as required by the Apache License, Version 2.0.
+This fork is not an official upstream release and does not represent the
+upstream project.

@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: package.json 合法
+        run: node -e "const p=require('./package.json'); if(!p.dsh||!p.dsh.bundle) throw new Error('dsh.bundle 缺失'); console.log(p.name, p.version)"
+
+      - name: 所有 JS 语法检查
+        run: |
+          set -euo pipefail
+          fail=0
+          while IFS= read -r f; do
+            node --check "$f" || { echo "FAIL $f"; fail=1; }
+          done < <(find . -name node_modules -prune -o \( -name '*.js' -o -name '*.mjs' \) -print)
+          exit $fail
+
+      - name: 前端 bundle 完整性
+        run: |
+          set -euo pipefail
+          grep -q '__ModuleLoader__' client.js
+          grep -q 'dsh-purge' client.js
+          test -f lib/index.js
+          test -f skills/redteam/quake-recon.md
+          echo "client.js + 技能目录完整"
+
+      - name: 安装器可执行
+        run: |
+          set -euo pipefail
+          bash -n install/install.sh
+          test -x install/install.sh        # 可执行位
+          test -f install/install.ps1
+          # install.ps1 必须带 UTF-8 BOM：PS 5.1 对无 BOM 文件按 ANSI(GBK) 读取会乱码
+          head -c 3 install/install.ps1 | od -An -tx1 | grep -q "ef bb bf"
+          test -f install/register.mjs

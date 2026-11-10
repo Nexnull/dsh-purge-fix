@@ -1,0 +1,15 @@
+node_modules/
+.DS_Store
+*.log
+
+# 构建与分发产物
+dist/
+backups/
+*.tar.gz
+*.zip
+!docs/**/*.zip
+
+# 运行时/本机状态，不要提交
+.env
+*.dshpurge.bak
+.workflow-lite/
